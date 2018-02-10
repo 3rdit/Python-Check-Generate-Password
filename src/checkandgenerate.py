@@ -5,6 +5,7 @@ print("begin module...") #debugging done in prints (i removed them all now thoug
 
 title = "Password Checker and Generator"
 list_of_chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRS123456789[ !#$%&'()*+,-./[\/]^_"
+global score
 
 try:
     import re
@@ -63,35 +64,53 @@ def go_back_generate():
     generate_root.withdraw()
 
 def check_password():
+    score = 0
     check_button.config(state='disabled') #to avoid spamming of msgboxes (yes im talking to you)
     contents = checker_field.get()
     password_integrity = verify_password(contents)
+    length = len(contents)
+    global length_msg
+    
+    if length > 100: #extra cool kid stuff (:cool:)
+        length_msg = "Wow! " + str(length) + " characters! Don't you think that's a bit overboard?"
 
+    elif length < 1:
+        messagebox.showwarning("Password Issue", "You didn't input anything! It can't work without input")
+        check_button.config(state='normal')
+        return 0
+
+    else:
+        length_msg = "You use a total of " + str(length) + " characters!"
+    
     if password_integrity == "too short":
-        messagebox.showwarning("Password Issue", "Password entered is too short! (minimum = 10)")
+        messagebox.showwarning("Password Issue", "Password entered is too short! (minimum = 10) ")
 
-    if password_integrity == "no lowercase":
+    elif password_integrity == "no lowercase":
         messagebox.showwarning("Password Issue", "Password does not have any lowercase characters!")
 
-    if password_integrity == "no uppercase":
+    elif password_integrity == "no uppercase":
         messagebox.showwarning("Password Issue", "Password does not have any uppercase characters!")
 
-    if password_integrity == "no specials":
+    elif password_integrity == "no specials":
         messagebox.showwarning("Password Issue", "Password does not have any special characters! (ex: !$@)")
 
-    if password_integrity == "no numbers":
+    elif password_integrity == "no numbers":
         messagebox.showwarning("Password Issue", "No numbers in password!")
 
-    if password_integrity == "whitespace character":
+    elif password_integrity == "whitespace character":
         messagebox.showwarning("Password Issue", "Whitespace character detected! Do not use spaces in your password!")
 
     elif password_integrity == "valid":
-        messagebox.showinfo("Password Valid!", "Nice job! Password entered is valid!")
+        messagebox.showinfo("Password Valid!", "Nice job! Password entered is valid! " + length_msg)
+
+    else:
+         messagebox.showerror("Error!", "No clue what you have done, however it's caused an error with the checking system! Verify your password you damn hacker")
 
     check_button.config(state='normal')
 
 def generate_password():
-    password = pw_generator(20, list_of_chars)
+    password = ''.join(random.choice(list_of_chars) for _ in range(20))
+    
     set_text(password)
 
 def initiate_check():
