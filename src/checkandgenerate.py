@@ -1,8 +1,6 @@
 #this is disgusting i know im sorry i suck at neat code i need to fix up
 #done in approx 2-3 hours (idk i wasn't really counting)
 
-print("begin module...") #debugging done in prints (i removed them all now though because no need)
-
 title = "Password Checker and Generator"
 list_of_chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRS123456789[ !#$%&'()*+,-./[\/]^_"
 global score
